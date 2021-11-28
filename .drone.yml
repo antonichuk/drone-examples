@@ -8,6 +8,7 @@ steps:
       - name: cache
         path: /tmp/cache
     commands:
+      - go mod init
       - go test -cover -v
       - echo $$HOSTNAME >> /tmp/cache/hostname.txt
       - env
