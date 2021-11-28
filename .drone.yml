@@ -1,11 +1,17 @@
-pipeline:
-  build:
-    image: node
-    commands:
-      - npm install
-      - npm test
-  publish:
-    image: plugins/docker
-    repo: drone/node-demo
-    secrets: [ docker_username, docker_password ]
-    dry_run: true # remove this to publish
+---
+kind: pipeline
+name: default
+
+steps:
+- name: test
+  image: docker:dind
+  volumes:
+  - name: dockersock
+    path: /var/run/docker.sock
+  commands:
+  - docker ps -a
+
+volumes:
+- name: dockersock
+  host:
+    path: /var/run/docker.sock
